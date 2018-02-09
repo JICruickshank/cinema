@@ -63,7 +63,7 @@ class Film
 
   def customers_viewing_film
 
-    return customers_viewing_film.length
+    return customers.length
 
   end
 

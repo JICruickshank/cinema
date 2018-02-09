@@ -69,7 +69,7 @@ class Customer
 
   end
 
-  def total_spend
+  def update_funds
 
     films.each { |film| @funds -= film.price}
     update

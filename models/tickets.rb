@@ -72,27 +72,32 @@ class Ticket
 
   end
 
-  # def charge_customer
-  #
-  #   customer.funds = customer.funds - film.price
-  #   return customer.funds
-  #
-  # end
+  def price
+
+    sql = "SELECT * FROM films WHERE id = $1"
+    values = [@film_id]
+    result = SqlRunner.run(sql, values)[0]
+    price = result['price'].to_i
+
+  end
+
+  def charge_customer_sql
+
+    sql = "UPDATE customers SET funds = funds - $1 WHERE id = $2"
+    values = [price, @customer_id]
+    SqlRunner.run(sql, values)
+
+  end
+
+  def charge_customer_ruby
+
+    viewer = customer
+    viewer.funds -= price
+    return viewer
+    viewer.update
+
+  end
 
 
-  # def charge_customer
-  #
-  #   Customer.all.each do |customer|
-  #     if customer.id == @customer_id
-  #       return customer
-  #     end
-  #   end
-  #   Film.all.each do |film|
-  #     if film.id == @film_id
-  #       return film
-  #     end
-  #   end
-  #   customer.funds -= film.price
-  # end
 
 end
