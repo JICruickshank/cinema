@@ -7,9 +7,9 @@ class Customer
 
   def initialize(options)
 
-    @id = options['id']
+    @id = options['id'].to_i
     @name = options['name']
-    @funds = options['funds']
+    @funds = options['funds'].to_i
 
   end
 
@@ -25,6 +25,7 @@ class Customer
     sql = "SELECT * FROM customers"
     result = SqlRunner.run(sql)
     customers = result.map { |customer| Customer.new(customer)  }
+    return customers
 
   end
 
@@ -62,6 +63,17 @@ class Customer
 
   end
 
+  def tickets_bought
 
+    return films.length
+
+  end
+
+  def total_spend
+
+    films.each { |film| @funds -= film.price}
+    update
+
+  end
 
 end

@@ -9,7 +9,7 @@ class Film
 
     @id = options['id'].to_i
     @title = options['title']
-    @price = options['price']
+    @price = options['price'].to_i
 
   end
 
@@ -58,6 +58,19 @@ class Film
     values = [@id]
     result = SqlRunner.run(sql, values)
     customers = result.map { |customer| Customer.new(customer) }
+
+  end
+
+  def customers_viewing_film
+
+    return customers_viewing_film.length
+
+  end
+
+  def charge_customers
+
+    customers.each {|customer| customer.funds -= @price}
+    customers.each {|customer| customer.update}
 
   end
 

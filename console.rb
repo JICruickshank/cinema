@@ -18,9 +18,14 @@ film2.save
 ticket1 = Ticket.new({'customer_id' => customer1.id, 'film_id' => film1.id})
 ticket2 = Ticket.new({'customer_id' => customer1.id, 'film_id' => film2.id})
 ticket1.save
+# binding.pry
+# nil
+# ticket1.charge_customer
 ticket2.save
+# ticket2.charge_customer
 ticket3 = Ticket.new({'customer_id' => customer2.id, 'film_id' => film1.id})
 ticket3.save
+# ticket3.charge_customer
 
 
 

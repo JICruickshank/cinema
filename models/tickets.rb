@@ -7,9 +7,9 @@ class Ticket
 
   def initialize(options)
 
-    @id = options['id']
-    @customer_id = options['customer_id']
-    @film_id = options['film_id']
+    @id = options['id'].to_i
+    @customer_id = options['customer_id'].to_i
+    @film_id = options['film_id'].to_i
 
   end
 
@@ -52,6 +52,47 @@ class Ticket
 
   end
 
-  
+  def film
+
+    sql = "SELECT * FROM films WHERE id = $1"
+    values = [@film_id]
+    result = SqlRunner.run(sql, values)[0]
+    film = Film.new(result)
+    return film
+
+  end
+
+  def customer
+
+    sql = "SELECT * FROM customers WHERE id = $1"
+    values = [@customer_id]
+    result = SqlRunner.run(sql, values)[0]
+    customer = Customer.new(result)
+    return customer
+
+  end
+
+  # def charge_customer
+  #
+  #   customer.funds = customer.funds - film.price
+  #   return customer.funds
+  #
+  # end
+
+
+  # def charge_customer
+  #
+  #   Customer.all.each do |customer|
+  #     if customer.id == @customer_id
+  #       return customer
+  #     end
+  #   end
+  #   Film.all.each do |film|
+  #     if film.id == @film_id
+  #       return film
+  #     end
+  #   end
+  #   customer.funds -= film.price
+  # end
 
 end
