@@ -52,17 +52,15 @@ class Ticket
 
   end
 
-  def
+  def screening
 
-  # def film
-  #
-  #   sql = "SELECT * FROM films WHERE id = $1"
-  #   values = [@film_id]
-  #   result = SqlRunner.run(sql, values)[0]
-  #   film = Film.new(result)
-  #   return film
+    sql = "SELECT * FROM screenings WHERE id = $1"
+    values = [@screening_id]
+    result = SqlRunner.run(sql, values)[0]
+    screening = Screening.new(result)
+    return screening
 
-  # end
+  end
 
   def customer
 
@@ -74,19 +72,24 @@ class Ticket
 
   end
 
-  # def price
-  #
-  #   sql = "SELECT * FROM films WHERE id = $1"
-  #   values = [@film_id]
-  #   result = SqlRunner.run(sql, values)[0]
-  #   price = result['price'].to_i
-  #
-  # end
+  def ticket_film
+
+    ticket_film = screening.film
+    return ticket_film
+
+  end
+
+  def ticket_price
+
+    ticket_price = ticket_film.price
+    return ticket_price
+
+  end
 
   def charge_customer_sql
 
     sql = "UPDATE customers SET funds = funds - $1 WHERE id = $2"
-    values = [price, @customer_id]
+    values = [ticket_price, @customer_id]
     SqlRunner.run(sql, values)
 
   end
@@ -94,7 +97,7 @@ class Ticket
   # def charge_customer_ruby
   #
   #   viewer = customer
-  #   viewer.funds -= price
+  #   viewer.funds -= ticket_price
   #   return viewer
   #   viewer.update
   #

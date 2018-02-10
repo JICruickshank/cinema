@@ -53,21 +53,42 @@ class Customer
 
   end
 
-  def films
+  def screenings
 
-    sql = "SELECT films.* FROM films INNER JOIN tickets ON films.id = tickets.film_id WHERE tickets.customer_id = $1"
+    sql = "SELECT screenings.* FROM screenings INNER JOIN tickets ON screenings.id = tickets.screening_id WHERE tickets.customer_id = $1"
     values = [@id]
     result = SqlRunner.run(sql, values)
-    films = result.map { |film| Film.new(film)  }
-    return films
+    screenings = result.map { |screening| Screening.new(screening)}
+    return screenings
+
+  end
+
+  def tickets
+
+    sql = "SELECT * FROM tickets WHERE customer_id = $1"
+    values = [@id]
+    result = SqlRunner.run(sql,values)
+    tickets = result.map { |ticket| Ticket.new(ticket)  }
 
   end
 
   def tickets_bought
 
-    return films.length
+    return tickets.length
 
   end
+
+  def films
+
+    films = []
+    tickets.each do |ticket|
+      films.push(ticket.ticket_film)
+    end
+    return films
+
+  end
+
+
 
   def update_funds
 
