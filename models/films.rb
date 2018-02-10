@@ -67,12 +67,4 @@ class Film
 
   end
 
-  def charge_customers
-
-    customers.each {|customer| customer.funds -= @price}
-    customers.each {|customer| customer.update}
-
-  end
-
-
 end
