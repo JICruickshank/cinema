@@ -79,7 +79,7 @@ class Screening
 
   end
 
-  def customer_count
+  def count_customers
 
     return customers.length
 
