@@ -94,14 +94,14 @@ class Ticket
 
   end
 
-  # def charge_customer_ruby
-  #
-  #   viewer = customer
-  #   viewer.funds -= ticket_price
-  #   return viewer
-  #   viewer.update
-  #
-  # end
+  def charge_customer_ruby
+
+    viewer = customer
+    viewer.funds -= ticket_price
+    return viewer
+    viewer.update
+
+  end
 
 
 

@@ -10,6 +10,7 @@ class Screening
     @id = options['id'].to_i
     @film_id = options['film_id'].to_i
     @start_time = options['start_time']
+    @max_tickets = options['max_tickets']
 
   end
 
@@ -79,9 +80,9 @@ class Screening
 
   end
 
-  def count_customers
+  def count_tickets_sold
 
-    return customers.length
+    return tickets.length
 
   end
 
