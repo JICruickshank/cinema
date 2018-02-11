@@ -52,14 +52,46 @@ class Film
 
   end
 
-  def customers
+  def screenings
 
-    sql = "SELECT customers.* FROM customers INNER JOIN tickets ON tickets.customer_id = customers.id WHERE tickets.film_id = $1"
+    sql = "SELECT * FROM screenings WHERE film_id = $1"
     values = [@id]
     result = SqlRunner.run(sql, values)
-    customers = result.map { |customer| Customer.new(customer) }
+    screenings = result.map { |screening| Screening.new(screening) }
 
   end
+
+  def most_popular_screening
+
+    tickets_per_screening = []
+    screenings.each { |screening| tickets_per_screening.push(screening.tickets)}
+    result = tickets_per_screening.max { |a, b| a.length <=> b.length }
+    most_popular_screening = result[0].screening
+    return  most_popular_screening
+
+  end
+
+  def customers
+
+    film_customers = []
+    screenings.each do |screening|
+       screening_customers = screening.customers
+        screening_customers.each { |customer| film_customers.push(customer)}
+    end
+    return film_customers
+
+  end
+
+
+
+  # def customers
+  #
+  #   sql = "SELECT customers.* FROM customers INNER JOIN tickets ON tickets.customer_id = customers.id WHERE tickets.film_id = $1"
+  #   values = [@id]
+  #   result = SqlRunner.run(sql, values)
+  #   customers = result.map { |customer| Customer.new(customer) }
+  #
+  # end
 
   def customers_viewing_film
 

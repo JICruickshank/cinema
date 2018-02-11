@@ -78,9 +78,8 @@ class Customer
 
   end
 
-  def films
+  def films         # what about duplicate films?
 
-    films = []
     tickets.each do |ticket|
       films.push(ticket.ticket_film)
     end
@@ -92,7 +91,7 @@ class Customer
 
   def update_funds
 
-    films.each { |film| @funds -= film.price}
+    tickets.each { |ticket| @funds -= ticket.ticket_price}
     update
 
   end
