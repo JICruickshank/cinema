@@ -78,7 +78,7 @@ class Customer
 
   end
 
-  def films         # what about duplicate films?
+  def films         
 
     tickets.each do |ticket|
       films.push(ticket.ticket_film)
@@ -86,8 +86,6 @@ class Customer
     return films
 
   end
-
-
 
   def update_funds
 

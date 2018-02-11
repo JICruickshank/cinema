@@ -10,7 +10,7 @@ class Screening
     @id = options['id'].to_i
     @film_id = options['film_id'].to_i
     @start_time = options['start_time']
-    @max_tickets = options['max_tickets']
+    @max_tickets = options['max_tickets'].to_i
 
   end
 
@@ -31,9 +31,9 @@ class Screening
 
   def save()
 
-    sql = "INSERT INTO screenings (film_id, start_time) VALUES ($1, $2) RETURNING id"
-    values = [@film_id, @start_time]
-    @id = SqlRunner.run(sql, values)[0]['id'].to_i
+      sql = "INSERT INTO screenings (film_id, start_time, max_tickets) VALUES ($1, $2, $3) RETURNING id"
+      values = [@film_id, @start_time, @max_tickets]
+      @id = SqlRunner.run(sql, values)[0]['id'].to_i
 
   end
 
@@ -47,8 +47,8 @@ class Screening
 
   def update
 
-    sql = "UPDATE screenings SET (film_id, start_time) = ($1, $2) WHERE id = $3"
-    values = [@film_id, @start_time, @id]
+    sql = "UPDATE screenings SET (film_id, start_time, max_tickets) = ($1, $2, $3) WHERE id = $4"
+    values = [@film_id, @start_time, @max_tickets, @id]
     SqlRunner.run(sql, values)
 
   end
@@ -83,6 +83,12 @@ class Screening
   def count_tickets_sold
 
     return tickets.length
+
+  end
+
+  def tickets_available
+
+    return true if count_tickets_sold < @max_tickets
 
   end
 

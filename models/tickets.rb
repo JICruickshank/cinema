@@ -30,9 +30,13 @@ class Ticket
 
   def save
 
-    sql = "INSERT INTO tickets (customer_id, screening_id) VALUES ($1, $2) RETURNING id"
-    values = [@customer_id, @screening_id]
-    @id = SqlRunner.run(sql, values)[0]['id'].to_i
+      if screening.tickets_available
+        sql = "INSERT INTO tickets (customer_id, screening_id) VALUES ($1, $2) RETURNING id"
+        values = [@customer_id, @screening_id]
+        @id = SqlRunner.run(sql, values)[0]['id'].to_i
+      else
+        return "No more tickets!"
+      end
 
   end
 
@@ -94,14 +98,15 @@ class Ticket
 
   end
 
-  def charge_customer_ruby
+  # def charge_customer_ruby
+  #
+  #   # why doesn't this work? different instance of Customer but id number is the same so should update sql but doesn't
+  #   viewer = customer
+  #   viewer.funds -= ticket_price
+  #   # return viewer
+  #   viewer.update
 
-    viewer = customer
-    viewer.funds -= ticket_price
-    return viewer
-    viewer.update
-
-  end
+  # end
 
 
 
