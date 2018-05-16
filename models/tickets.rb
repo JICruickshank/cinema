@@ -98,15 +98,15 @@ class Ticket
 
   end
 
-  # def charge_customer_ruby
-  #
-  #   # why doesn't this work? different instance of Customer but id number is the same so should update sql but doesn't
-  #   viewer = customer
-  #   viewer.funds -= ticket_price
-  #   # return viewer
-  #   viewer.update
+  def charge_customer_ruby
 
-  # end
+    # why doesn't this work? different instance of Customer but id number is the same so should update sql but doesn't
+    viewer = customer
+    viewer.funds -= ticket_price
+    # return viewer
+    viewer.update
+
+  end
 
 
 

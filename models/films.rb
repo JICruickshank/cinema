@@ -66,8 +66,16 @@ class Film
     tickets_per_screening = []
     screenings.each { |screening| tickets_per_screening.push(screening.tickets)}
     result = tickets_per_screening.max { |a, b| a.length <=> b.length }
+    most_popular_screenings = []
     most_popular_screening = result[0].screening
-    return  most_popular_screening
+    # return  most_popular_screening
+    # return tickets_per_screening
+    tickets_per_screening.each do |screening|
+      if screening.length == result.length
+        most_popular_screenings.push(screening)
+    return most_popular_screenings
+      end
+    end
 
   end
 
